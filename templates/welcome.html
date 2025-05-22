@@ -3,19 +3,21 @@
 {% block title %}歡迎{% endblock %}
 
 {% block content %}
-<h2>歡迎，{{ username }}！</h2>
+<div class="welcome-container">
+  <h2>歡迎，★{{ username }}★！</h2>
 
-<!-- 刪除按鈕 -->
-<form id="deleteForm" action="{{ url_for('delete_user', iid=iid) }}" method="POST" onsubmit="return confirmDelete();">
-  <button type="submit" class="btn btn-danger mt-3">刪除使用者</button>
-</form>
-
-<a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">回首頁</a>
-<a href="{{ url_for('edit_profile', iid=iid) }}" class="btn btn-primary mt-3">修改基本資料</a>
+  <div class="action-buttons">
+    <a href="{{ url_for('edit_profile', iid=iid) }}" class="btn btn-primary">修改基本資料</a>
+    <a href="#" class="btn btn-danger" onclick="confirmDelete('{{ iid }}')">刪除使用者</a>
+    <a href="{{ url_for('home') }}" class="btn btn-secondary">回首頁</a>
+  </div>
+</div>
 
 <script>
-function confirmDelete() {
-  return confirm('若刪除這個使用者，所有相關記錄將一併刪除，是否繼續？');
-}
+  function confirmDelete(iid) {
+    if (confirm("若刪除這個使用者，所有相關記錄將一併刪除，是否繼續？")) {
+      window.location.href = "/delete/" + iid;
+    }
+  }
 </script>
 {% endblock %}
